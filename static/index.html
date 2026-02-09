@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Video Learning Tool</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎓 Smart Video Learning Tool</h1>
+            <p class="subtitle">Transform YouTube Videos into Interactive Learning Materials</p>
+        </header>
+
+        <div class="input-section">
+            <div class="toggle-buttons">
+                <button type="button" class="toggle-btn active" onclick="switchMode('url')" id="urlModeBtn">📺 YouTube URL</button>
+                <button type="button" class="toggle-btn" onclick="switchMode('transcript')" id="transcriptModeBtn">📝 Paste Transcript</button>
+            </div>
+
+            <form id="videoForm">
+                <div id="urlMode" class="input-mode">
+                    <div class="input-group">
+                        <label for="youtubeUrl">📺 Enter YouTube URL</label>
+                        <input 
+                            type="text" 
+                            id="youtubeUrl" 
+                            name="youtubeUrl"
+                            placeholder="https://www.youtube.com/watch?v=..."
+                        >
+                    </div>
+                    <div class="example-urls">
+                        <p>Try these examples:</p>
+                        <button type="button" class="example-btn" onclick="fillExample('https://www.youtube.com/watch?v=dQw4w9WgXcQ')">Example 1</button>
+                        <button type="button" class="example-btn" onclick="fillExample('https://youtu.be/dQw4w9WgXcQ')">Example 2</button>
+                    </div>
+                </div>
+
+                <div id="transcriptMode" class="input-mode" style="display: none;">
+                    <div class="input-group">
+                        <label for="videoTitle">🎬 Video Title (Optional)</label>
+                        <input 
+                            type="text" 
+                            id="videoTitle" 
+                            name="videoTitle"
+                            placeholder="Enter the video title..."
+                        >
+                    </div>
+                    <div class="input-group">
+                        <label for="transcriptText">📝 Paste Video Transcript</label>
+                        <textarea 
+                            id="transcriptText" 
+                            name="transcriptText"
+                            placeholder="Paste the video transcript here...&#10;&#10;Example:&#10;Hello everyone, today we're going to learn about machine learning.&#10;Machine learning is a subset of artificial intelligence..."
+                            rows="10"
+                        ></textarea>
+                        <small class="hint">Tip: Copy the transcript from YouTube or any video source and paste it here</small>
+                    </div>
+                </div>
+
+                <button type="submit" id="submitBtn">
+                    <span class="btn-text">Generate Learning Materials</span>
+                    <span class="loader" style="display: none;"></span>
+                </button>
+            </form>
+        </div>
+
+        <div id="loading" class="loading" style="display: none;">
+            <div class="spinner"></div>
+            <p>Processing video... This may take 15-30 seconds</p>
+            <p class="loading-tip">⏳ Extracting transcript and generating learning materials...</p>
+        </div>
+
+        <div id="error" class="error" style="display: none;">
+            <h3>❌ Error</h3>
+            <p id="errorMessage"></p>
+        </div>
+
+        <div id="results" class="results" style="display: none;">
+            <div class="result-header">
+                <h2 id="videoTitle"></h2>
+                <span id="videoDuration" class="duration"></span>
+            </div>
+
+            <section class="summary-section">
+                <h3>📝 Summary</h3>
+                <div id="summary" class="summary-content"></div>
+            </section>
+
+            <section class="keypoints-section">
+                <h3>💡 Key Points</h3>
+                <ul id="keyPoints" class="key-points-list"></ul>
+            </section>
+
+            <section class="quiz-section">
+                <h3>❓ Quiz Questions</h3>
+                <div id="quiz" class="quiz-container"></div>
+            </section>
+
+            <div class="actions">
+                <button onclick="downloadResults()" class="action-btn">💾 Download Results</button>
+                <button onclick="resetForm()" class="action-btn secondary">🔄 Process Another Video</button>
+            </div>
+        </div>
+
+        <footer>
+            <p>Powered by OpenAI GPT-4o | Built with FastAPI</p>
+            <p><a href="/docs" target="_blank">API Documentation</a></p>
+        </footer>
+    </div>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>
