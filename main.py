@@ -1,7 +1,5 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.staticfiles import StaticFiles
-from fastapi.responses import FileResponse
 
 from config import settings
 from models import VideoRequest, TranscriptRequest, VideoResponse, HealthResponse, QuizQuestion
@@ -14,13 +12,10 @@ app = FastAPI(
     version=settings.APP_VERSION
 )
 
-# Mount static files
-app.mount("/static", StaticFiles(directory="static"), name="static")
-
-# CORS middleware
+# CORS middleware - Allow all origins for deployment
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=settings.CORS_ORIGINS,
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -32,8 +27,8 @@ openai_service = OpenAIService()
 
 @app.get("/")
 async def root():
-    """Serve the main HTML page"""
-    return FileResponse("static/index.html")
+    """API root endpoint"""
+    return {"message": "Smart Video Learning Tool API", "status": "running"}
 
 @app.get("/health", response_model=HealthResponse)
 async def health_check():
