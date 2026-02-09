@@ -8,9 +8,6 @@ from models import VideoRequest, TranscriptRequest, VideoResponse, HealthRespons
 from services.transcript_service import TranscriptService
 from services.openai_service import OpenAIService
 
-# Validate configuration
-settings.validate()
-
 app = FastAPI(
     title=settings.APP_NAME,
     description=settings.APP_DESCRIPTION,

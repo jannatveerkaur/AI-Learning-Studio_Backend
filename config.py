@@ -45,7 +45,7 @@ class Settings:
     def validate(cls):
         """Validate required settings"""
         if not cls.GROQ_API_KEY:
-            raise ValueError("GROQ_API_KEY environment variable is required")
+            print("WARNING: GROQ_API_KEY environment variable is not set")
         return True
 
 
